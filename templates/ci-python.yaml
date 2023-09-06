@@ -1,0 +1,32 @@
+parameters:
+  solutionPath:
+jobs:
+- job: ContinousIntegrationForPython
+  displayName: CI for Python
+  steps:
+    - checkout: self
+      displayName: Checkout repository
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.10'
+      displayName: 'Use Python $(python.version)'
+
+    - script: |
+        python3 -m venv env
+        source env/bin/activate
+        pip install -r requirements.txt
+      displayName: 'Set Up Development Environment'
+      workingDirectory: $(Build.SourcesDirectory)
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: publishFiles
