@@ -64,7 +64,7 @@ stages:
       - checkParameters
     condition: and(succeeded(), eq(variables['language'], 'python'))  
     jobs:
-      - template: templates/ci-nodejs.yaml
+      - template: templates/ci-python.yaml
         parameters:
           solutionPath: $(solutionPath)
 
