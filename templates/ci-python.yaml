@@ -25,8 +25,18 @@ jobs:
         rootFolderOrFile: '$(Build.SourcesDirectory)'
         includeRootFolder: false
         archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/pythonApp.zip
         replaceExistingArchive: true
 
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    - publish: $(Build.ArtifactStagingDirectory)/pythonApp.zip
       artifact: publishFiles
+
+    - task: AzureRmWebAppDeployment@4
+      displayName: 'Deploy to Azure App Service'
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'ca7e002b-ac4b-46af-8581-9f1885aebcbe'
+        appType: 'webAppLinux'  # Use 'webApp' for Windows
+        WebAppName: 'pythonflaskapp98'
+        package: '$(Build.ArtifactStagingDirectory)/pythonApp.zip'
+        StartupCommand: 'python app.py'
