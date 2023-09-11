@@ -32,7 +32,7 @@ jobs:
 
     - publish: $(Build.ArtifactStagingDirectory)/pythonApp.zip
       artifact: publishFiles
-      Name: 'Publish Artifacts'
+      displayName: 'Publish Artifacts'
 
     - task: AzureWebApp@1
       displayName: 'Deploy to Azure App Service'
