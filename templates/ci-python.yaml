@@ -35,7 +35,7 @@ jobs:
       displayName: 'Deploy to Azure App Service'
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'ca7e002b-ac4b-46af-8581-9f1885aebcbe'
+        azureSubscription: '88b5917c-3e18-40af-ba4f-db13801d0898'
         appType: 'webAppLinux'  # Use 'webApp' for Windows
         WebAppName: 'pythonflaskapp98'
         package: '$(Build.ArtifactStagingDirectory)/pythonApp.zip'
