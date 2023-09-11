@@ -15,8 +15,10 @@ jobs:
     - script: |
         python3 -m venv env
         source env/bin/activate
+        python -m pip install --upgrade pip
+        pip install setup
         pip install -r requirements.txt
-      displayName: 'Set Up Development Environment'
+      displayName: 'Install Python Dependencies'
       workingDirectory: $(Build.SourcesDirectory)
 
     - task: ArchiveFiles@2
@@ -30,13 +32,12 @@ jobs:
 
     - publish: $(Build.ArtifactStagingDirectory)/pythonApp.zip
       artifact: publishFiles
+      Name: 'Publish Artifacts'
 
-    - task: AzureRmWebAppDeployment@4
+    - task: AzureWebApp@1
       displayName: 'Deploy to Azure App Service'
       inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Test_CI_CD'
-        appType: 'webAppLinux'  # Use 'webApp' for Windows
+        appType: 'webAppLinux'
+        azureSubscription: '88b5917c-3e18-40af-ba4f-db13801d0898'
         WebAppName: 'pythonflaskapp98'
-        package: '$(Build.ArtifactStagingDirectory)/pythonApp.zip'
-        StartupCommand: 'python app.py'
+        package: '$(Pipeline.Workspace)/drop/pythonApp.zip'
