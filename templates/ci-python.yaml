@@ -38,6 +38,6 @@ jobs:
       displayName: 'Deploy to Azure App Service'
       inputs:
         appType: 'webAppLinux'
-        azureSubscription: Test-CI_CD
+        azureSubscription: 'Test-CI_CD'
         WebAppName: 'pythonflaskapp98'
         package: '$(Pipeline.Workspace)/drop/pythonApp.zip'
