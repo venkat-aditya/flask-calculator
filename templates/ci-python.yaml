@@ -40,7 +40,7 @@ jobs:
         azureSubscription: 'Test_CI_CD'
         appType: 'webAppLinux'
         WebAppName: 'pythonflaskapp98'
-        packageForLinux: '$(Pipeline.Workspace)/publishFiles/pythonApp.zip'
+        packageForLinux: '$(Build.ArtifactStagingDirectory)/pythonApp.zip'
         RuntimeStack: 'PYTHON|3.10'
         StartupCommand: 'python app.py'
         ScriptType: 'Inline Script'
