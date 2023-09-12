@@ -34,10 +34,15 @@ jobs:
       artifact: publishFiles
       displayName: 'Publish Artifacts'
 
-    - task: AzureWebApp@1
-      displayName: 'Deploy to Azure App Service'
+    - task: AzureRmWebAppDeployment@4
       inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Test_CI_CD'
         appType: 'webAppLinux'
-        azureSubscription: '88b5917c-3e18-40af-ba4f-db13801d0898'
         WebAppName: 'pythonflaskapp98'
-        package: '$(Pipeline.Workspace)/drop/pythonApp.zip'
+        packageForLinux: '$(Pipeline.Workspace)/drop/pythonApp.zip'
+        RuntimeStack: 'PYTHON|3.10'
+        StartupCommand: 'python app.py'
+        ScriptType: 'Inline Script'
+        InlineScript: 'pip install -r requirements.txt'
+
